@@ -1,0 +1,90 @@
+<div class="card fade-in">
+      <h2>Add New Data</h2>
+      
+      <div *ngIf="successMessage" class="success-message fade-in">
+        {{ successMessage }}
+      </div>
+      
+      <form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name"
+            [ngClass]="{'is-invalid': submitted && f['name'].errors}">
+          <div *ngIf="submitted && f['name'].errors" class="error-message">
+            <div *ngIf="f['name'].errors['required']">Name is required</div>
+            <div *ngIf="f['name'].errors['pattern']">Please enter a valid name (letters only)</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            [ngClass]="{'is-invalid': submitted && f['email'].errors}">
+          <div *ngIf="submitted && f['email'].errors" class="error-message">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['pattern']">Please enter a valid email address</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            formControlName="phone"
+            [ngClass]="{'is-invalid': submitted && f['phone'].errors}">
+          <div *ngIf="submitted && f['phone'].errors" class="error-message">
+            <div *ngIf="f['phone'].errors['required']">Phone number is required</div>
+            <div *ngIf="f['phone'].errors['pattern']">Please enter a valid phone number (10 digits)</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input 
+            type="number" 
+            id="age" 
+            formControlName="age"
+            [ngClass]="{'is-invalid': submitted && f['age'].errors}">
+          <div *ngIf="submitted && f['age'].errors" class="error-message">
+            <div *ngIf="f['age'].errors['required']">Age is required</div>
+            <div *ngIf="f['age'].errors['min']">Age must be at least 18</div>
+            <div *ngIf="f['age'].errors['max']">Age cannot exceed 120</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="occupation">Occupation</label>
+          <input 
+            type="text" 
+            id="occupation" 
+            formControlName="occupation"
+            [ngClass]="{'is-invalid': submitted && f['occupation'].errors}">
+          <div *ngIf="submitted && f['occupation'].errors" class="error-message">
+            <div *ngIf="f['occupation'].errors['required']">Occupation is required</div>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button 
+            type="submit" 
+            class="btn btn-primary"
+            [disabled]="loading">
+            {{ loading ? 'Submitting...' : 'Submit Data' }}
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-secondary" 
+            (click)="resetForm()"
+            [disabled]="loading">
+            Reset Form
+          </button>
+        </div>
+      </form>
+    </div>

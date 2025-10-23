@@ -1,0 +1,47 @@
+.table-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .search-container {
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .items-per-page {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .items-per-page select {
+      width: auto;
+    }
+    
+    .no-data {
+      text-align: center;
+      padding: 24px;
+      color: var(--secondary);
+    }
+    
+    th {
+      user-select: none;
+    }
+    .btn-gray{
+      background-color: rgb(143, 143, 143);
+      color: #ffffff;
+      margin:auto 5px ;
+    }
+    .btn-red{
+      background-color: rgb(226, 65, 65);
+      color: white;
+    }
+    .btn-success{
+      background-color: rgb(45, 170, 45);
+      color: white;
+      margin:auto 5px ;
+    }

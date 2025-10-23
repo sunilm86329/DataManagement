@@ -1,0 +1,96 @@
+<div class="card fade-in">
+      <h2>User Data</h2>
+
+      <div *ngIf="loading" class="loading">Loading data...</div>
+      <div *ngIf="error" class="error-message">{{ error }}</div>
+
+      <div *ngIf="!loading && !error">
+        <div class="table-controls">
+          <div class="search-container">
+            <label for="search" class="sr-only">Search</label>
+            <input 
+              type="text" 
+              id="search" 
+              placeholder="Search by name, email, or occupation..." 
+              [(ngModel)]="searchText"
+              (input)="onSearch()">
+          </div>
+
+          <div class="items-per-page">
+            <label for="pageSize">Items per page:</label>
+            <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngIf="filteredData.length === 0" class="no-data">No data available.</div>
+
+        <div *ngIf="filteredData.length > 0" class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th (click)="sort('name')">Name <span *ngIf="sortColumn === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+                <th (click)="sort('email')">Email <span *ngIf="sortColumn === 'email'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+                <th (click)="sort('phone')">Phone <span *ngIf="sortColumn === 'phone'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+                <th (click)="sort('age')">Age <span *ngIf="sortColumn === 'age'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+                <th (click)="sort('occupation')">Occupation <span *ngIf="sortColumn === 'occupation'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span></th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of paginatedData" class="fade-in">
+                <ng-container *ngIf="editUserId !== item.id; else editForm">
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.email }}</td>
+                  <td>{{ item.phone }}</td>
+                  <td>{{ item.age }}</td>
+                  <td>{{ item.occupation }}</td>
+                  <td>
+                    <button (click)="startEdit(item)" class="btn btn-gray">Edit</button>
+                    <button (click)="deleteUser(item)" class="btn btn-red">Delete</button>
+                  </td>
+                </ng-container>
+
+                <ng-template #editForm>
+                  <td><input [(ngModel)]="editData.name" /></td>
+                  <td><input [(ngModel)]="editData.email" /></td>
+                  <td><input [(ngModel)]="editData.phone" /></td>
+                  <td><input type="number" [(ngModel)]="editData.age" /></td>
+                  <td><input [(ngModel)]="editData.occupation" /></td>
+                  <td>
+                    <button (click)="saveEdit()" class="btn btn-success">Save</button>
+                    <button (click)="cancelEdit()" class="btn btn-gray">Cancel</button>
+                  </td>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+
+          <nav *ngIf="totalPages > 1">
+            <ul class="pagination">
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" (click)="changePage(1)" aria-label="First">&laquo;</a>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">&lt;</a>
+              </li>
+
+              <li class="page-item" *ngFor="let page of getPageRange()" [class.active]="page === currentPage">
+                <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+              </li>
+
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">&gt;</a>
+              </li>
+              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" (click)="changePage(totalPages)" aria-label="Last">&raquo;</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
