@@ -1,4 +1,4 @@
-<div class="card fade-in">
+<!-- <div class="card fade-in">
       <h2>User Data</h2>
 
       <div *ngIf="loading" class="loading">Loading data...</div>
@@ -93,4 +93,80 @@
           </nav>
         </div>
       </div>
+    </div> -->
+
+<div class="card fade-in">
+  <h2>User Data</h2>
+
+  <div *ngIf="loading" class="loading">Loading data...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <div class="table-controls">
+      <div class="search-container">
+        <label for="search" class="sr-only">Search</label>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search by name, email, or occupation..."
+          [(ngModel)]="searchText"
+          (input)="onSearch()"
+        />
+      </div>
     </div>
+
+    <div *ngIf="filteredData.length === 0" class="no-data">
+      No data available.
+    </div>
+
+    <div *ngIf="filteredData.length > 0" class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Occupation</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of filteredData" class="fade-in">
+            <ng-container *ngIf="editUserId !== item.id; else editForm">
+              <td>{{ item.name }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.phone }}</td>
+              <td>{{ item.age }}</td>
+              <td>{{ item.occupation }}</td>
+              <td>
+                <button (click)="startEdit(item)" class="btn btn-gray">
+                  Edit
+                </button>
+                <button (click)="deleteUser(item)" class="btn btn-red">
+                  Delete
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-template #editForm>
+              <td><input [(ngModel)]="editData.name" /></td>
+              <td><input [(ngModel)]="editData.email" /></td>
+              <td><input [(ngModel)]="editData.phone" /></td>
+              <td><input type="number" [(ngModel)]="editData.age" /></td>
+              <td><input [(ngModel)]="editData.occupation" /></td>
+              <td>
+                <button (click)="saveEdit()" class="btn btn-success">
+                  Save
+                </button>
+                <button (click)="cancelEdit()" class="btn btn-gray">
+                  Cancel
+                </button>
+              </td>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
