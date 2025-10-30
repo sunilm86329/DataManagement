@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "age": 21,
+        "email": "sunilm86329@gmail.com",
+        "id": "0",
+        "name": "sunil kumar",
+        "occupation": "software",
+        "phone": "7095300693"
+    },
+    {
+        "age": 26,
+        "email": "anil@gmail.com",
+        "id": "1",
+        "name": "anil kumar",
+        "occupation": "software",
+        "phone": "7095300693"
+    }
+]
